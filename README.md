@@ -1,2 +1,2 @@
 # Sample_Application
-Sample application for learning
+File allows for you to input your name and outputs the messege: Hello "name".
