@@ -16,10 +16,14 @@ RUN pip install -r requirements.txt
 # The first parameter 'main.py' is the name of the file on the host.
 # The second parameter '/' is the path where to put the file on the image.
 # Here we put the file at the image root folder.
-COPY sample_application.py /
+COPY src/ .
 
 # We need to define the command to launch when we are going to run the image.
 # We use the keyword 'CMD' to do that.
 # The following command will execute "python ./main.py".
+
+FROM nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
 
 CMD [ "python", "./sample_application.py" ]
