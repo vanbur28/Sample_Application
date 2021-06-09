@@ -2,9 +2,13 @@
 # We use the keyword 'FROM' to do that.
 # In our example, we want import the python image.
 # So we write 'python' for the image name and 'latest' for the version.
-FROM python:latest
-FROM node:alpine
-FROM nginx
+FROM python:3.9
+
+#Working directory for the application ont eh github server.
+WORKDIR /go/src/github.com/vanbur28/sample_application
+
+# install dependencies
+RUN pip install -r requirements.txt 
 
 
 # In order to launch our python code, we must import it into our image.
@@ -17,5 +21,5 @@ COPY sample_application.py /
 # We need to define the command to launch when we are going to run the image.
 # We use the keyword 'CMD' to do that.
 # The following command will execute "python ./main.py".
-WORKDIR /Users/tylervanburen/Desktop/Sample_app
+
 CMD [ "python", "./sample_application.py" ]
