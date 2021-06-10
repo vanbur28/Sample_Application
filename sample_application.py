@@ -1,3 +1,3 @@
 #sample application
 
-print("Hey Dcoker")
+print("Hey Docker")
