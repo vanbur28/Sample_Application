@@ -2,6 +2,4 @@
 
 When running file it displays the text: 'Hello, Docker!'
 
-No additional libraries needed except python3 package.
-
-To run file go to terminal and type in: python "/location/of/file"
+To build the docker image: docker build --tag sample_application .
