@@ -1,49 +1,22 @@
-# A dockerfile must always start by importing the base image.
-# We use the keyword 'FROM' to do that.
-# In our example, we want import the python image.
-# So we write 'python' for the image name and 'latest' for the version.
-FROM python:3.9
+# syntax=docker/dockerfile:1 #Instructs the dockerfile for what syntax to use.
 
-#Working directory for the application ont eh github server.
-WORKDIR /go/src/github.com/vanbur28/sample_application
+# This part of the code twlls what specific base image to use, the slim buster has the minimum packages installed
+FROM python:3.9.5-slim-buster 
 
-# install dependencies
-RUN pip install -r requirements.txt 
+#where the files are being used from on the directory the dockerfile is running (local in this case)
+WORKDIR /sample_application
 
+#To copy the contents of the requirments.txt to another .txt file with the same name within the image
+COPY requirements.txt requirements.txt
 
-# In order to launch our python code, we must import it into our image.
-# We use the keyword 'COPY' to do that.
-# The first parameter 'main.py' is the name of the file on the host.
-# The second parameter '/' is the path where to put the file on the image.
-# Here we put the file at the image root folder.
-COPY src/ .
+RUN pip3 install -r requirements.txt
 
-# We need to define the command to launch when we are going to run the image.
-# We use the keyword 'CMD' to do that.
-# The following command will execute "python ./main.py".
+#Since the application directory is already open the ". ." just refers to the current direcotry and the COPY function duplicates all files within the directory into the image
+COPY . .
 
-FROM nginx
-COPY nginx.conf /etc/nginx/nginx.conf
-
-
-CMD [ "python", "./sample_application.py" ]
-
-FROM ubuntu:18.04
-
-# Install dependencies
-RUN apt-get update && \
-    apt-get -y install apache2
-
-# Install apache and write hello world message
-RUN echo 'Hello World!' > /var/www/html/index.html
-
-# Configure apache
-RUN echo '. /etc/apache2/envvars' > /root/run_apache.sh && \
-    echo 'mkdir -p /var/run/apache2' >> /root/run_apache.sh && \
-    echo 'mkdir -p /var/lock/apache2' >> /root/run_apache.sh && \ 
-    echo '/usr/sbin/apache2 -D FOREGROUND' >> /root/run_apache.sh && \ 
-    chmod 755 /root/run_apache.sh
-
-EXPOSE 80
-
-CMD /root/run_apache.sh
+#python3 tells the app to be run as a python3; 
+#-m flag sets memory limit; 
+#flask defines the environmental variables; 
+#flask run tells the file to exicute the application in the flask environment; 
+#--host=0.0.0.0 allows thde application to be used outside of the container environment 
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
