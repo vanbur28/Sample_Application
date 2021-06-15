@@ -3,6 +3,7 @@
 import mysql.connector
 import json
 from flask import Flask
+
 app = Flask(__name__)
 
 # Hello world application that prints text when it is ran
@@ -43,7 +44,7 @@ def get_widgets():
 
     # Adds two collumns named 'row_headers' and 'results'
     for result in results:
-        json_data.append(dict(zip(row_headers, results)))
+        json_data.append(dict(zip(row_headers, result)))
 
     # stops the ability to add items to database
     cursor.close()
@@ -63,9 +64,24 @@ def db_init():
     cursor = mydb.cursor()
 
     cursor.execute("DROP DATABASE IF EXISTS inventory")
+    cursor.execute("CREATE DATABASE inventory")
+    cursor.close()
+
+    mydb = mysql.connector.connect(
+        host="mysqldb",
+        user="root",
+        password="p@ssw0rd1",
+        database="inventory"
+    )
+
+    cursor = mydb.cursor()
+
+    cursor.execute("DROP TABLE IF EXISTS widgets")
     cursor.execute(
         "CREATE TABLE widgets (name VARCHAR(255), description VARCHAR(255))")
     cursor.close()
+
+    return 'init database'
 
 
 if __name__ == "__main__":
