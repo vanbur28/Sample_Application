@@ -8,6 +8,7 @@ services:
       - 5000:5000
     volumes:
       - ./:/app
+    container_name: vanburen_app
 
   mysqldb:
     image: mysql
