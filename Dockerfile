@@ -12,6 +12,8 @@ COPY requirements.txt requirements.txt
 RUN apt-get update
 RUN pip3 install -r requirements.txt
 
+EXPOSE 5000
+
 #Since the application directory is already open the ". ." just refers to the current direcotry and the COPY function duplicates all files within the directory into the image
 COPY . .
 
