@@ -12,7 +12,7 @@ services:
   mysqldb:
     image: mysql
     ports:
-      - 3306:3306
+      - 80:80
     environment:
       - MYSQL_ROOT_PASSWORD=p@ssw0rd1
     volumes:
