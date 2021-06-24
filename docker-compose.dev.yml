@@ -1,13 +1,19 @@
-version: "3.3"
+version: "3"
 
 services:
+  #Attempting to get nginx to allow my web application to run
+  client:
+    image: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./src:/usr/share/nginx/html #Unsure why src is placed here
+
   web:
     image: nginx:latest
     build:
       context: .
     ports:
-      - 80:80
-      - 443:443
       - 5000:5000
     volumes:
       - ./:/app
