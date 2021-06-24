@@ -14,7 +14,7 @@ services:
     build:
       context: .
     ports:
-      - 8000:80
+      - 5000:443
     volumes:
       - ./:/app
 
