@@ -13,6 +13,8 @@ RUN apt-get update
 RUN pip3 install -r requirements.txt
 
 EXPOSE 5000
+EXPOSE 80
+EXPOSE 443
 
 #Since the application directory is already open the ". ." just refers to the current direcotry and the COPY function duplicates all files within the directory into the image
 COPY . .
