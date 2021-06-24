@@ -3,6 +3,9 @@
 # This part of the code twlls what specific base image to use, the slim buster has the minimum packages installed
 FROM python:3.9.5-slim-buster 
 
+#https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose
+FROM node:10-alpine
+
 #where the files are being used from on the directory the dockerfile is running (local in this case)
 WORKDIR /sample_application
 
@@ -11,9 +14,10 @@ COPY requirements.txt requirements.txt
 
 RUN apt-get update
 RUN pip3 install -r requirements.txt
+RUN npm install
 
 EXPOSE 5000
-EXPOSE 80
+EXPOSE 8080
 EXPOSE 443
 
 #Since the application directory is already open the ". ." just refers to the current direcotry and the COPY function duplicates all files within the directory into the image
