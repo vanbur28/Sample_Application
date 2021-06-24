@@ -14,7 +14,6 @@ COPY requirements.txt requirements.txt
 
 RUN apt-get update
 RUN pip3 install -r requirements.txt
-RUN npm install
 
 EXPOSE 5000
 EXPOSE 8080

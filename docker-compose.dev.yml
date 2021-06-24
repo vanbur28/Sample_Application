@@ -1,34 +1,16 @@
 version: "3"
 
 services:
-  #Attempting to get nginx to allow my web application to run
-  nodejs:
+  web:
+    image: nginx:latest
     build:
       context: .
-      dockerfile: dockerfile
-    image: nodejs
-    container_name: nodejs
-    restart: unless-stopped
-    networks:
-      - app-network
-
-  webserver:
-    image: nginx:latest
-    container_name: webserver
-    restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
+      - 5000:5000
     volumes:
-      volumes:
-        - web-root:/var/www/html
-        - ./nginx-conf:/etc/nginx/conf.d
-        - certbot-etc:/etc/letsencrypt
-        - certbot-var:/var/lib/letsencrypt
-      depends_on: 
-        - nodejs
-      networks:
-        - app-network  
+      - ./:/app
 
   mysqldb:
     image: mysql
@@ -40,29 +22,6 @@ services:
       - mysql:/var/lib/mysql
       - mysql_config:/etc/mysql
 
-      certbot:
-        image: certbot/certbot
-        container_name: certbot
-        volumes:
-          - certbot-etc:/etc/letsencrypt
-          - certbot-var:/var/lib/letsencrypt
-          - web-root:/var/www/html
-        depends_on:
-          - webserver
-        command: certonly --webroot --webroot-path=/var/www/html --email Tyler.VanBuren@axleinfo.com --agree-tos --no-eff-email --staging -d tyler.intern.aws.labshare.org  -d www.tyler.intern.aws.labshare.org
-
 volumes:
-  certbot-etc:
-  certbot-var:
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/ubuntu/
-      o: bind
   mysql:
   mysql_config:
-
-networks:
-  app-network:
-    driver: bridge
