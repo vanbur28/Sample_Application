@@ -9,8 +9,6 @@ services:
       - 5000:5000
     volumes:
       - ./:/app
-    depends_on:
-      - db
 
   mysqldb:
     image: mysql
