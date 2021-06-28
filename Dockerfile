@@ -4,17 +4,13 @@
 FROM python:3.9.5-slim-buster 
 
 #where the files are being used from on the directory the dockerfile is running (local in this case)
-WORKDIR /sample_application
+WORKDIR .
 
 #To copy the contents of the requirments.txt to another .txt file with the same name within the image
 COPY requirements.txt requirements.txt
 
 RUN apt-get update
 RUN pip3 install -r requirements.txt
-
-EXPOSE 5000
-EXPOSE 8000
-EXPOSE 443
 
 #Since the application directory is already open the ". ." just refers to the current direcotry and the COPY function duplicates all files within the directory into the image
 COPY . .
