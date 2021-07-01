@@ -2,4 +2,4 @@
 
 When running file it displays the text: 'Hello, Docker!'
 
-To build the docker image: docker build --tag sample_application .
+Application is built to run on EC2 and
