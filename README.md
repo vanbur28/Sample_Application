@@ -1,6 +1,6 @@
-## Sample_Application
+# Sample_Application
 
-# Aplication:
+## Aplication:
 
 Created using:https://docs.docker.com/language/python/
 
@@ -13,16 +13,16 @@ Application also had the ability to create an empty database and can be connecte
 curl http://localhost:5000/initdb
 curl http://localhost:5000/widgets
 
-# Docker Compose
+## Docker Compose
 
 Allows the automated running of application file and Docker file and the setup of the application and Docker image.
 
-# Requirments
+## Requirments
 
 Downloads libraries required to run application.
 
-# Github main workflow
+## Github main workflow
 
 Allows the automated flow of docker images to and from dockerhub repository.
 
-# Jenkinsfile
+## Jenkinsfile
