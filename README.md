@@ -6,11 +6,11 @@ Created using:https://docs.docker.com/language/python/
 
 When running file it displays the text: 'Hello, Docker!'
 
-After application docker image is running locally through use of command: \
+After application docker image is running locally through use of command: <br />
 docker-compose -f docker-compose.dev.yml up -d --build
 
-Application also had the ability to create an empty database and can be connected locally through: \
-curl http://localhost:5000/initdb \
+Application also had the ability to create an empty database and can be connected locally through: <br />
+curl http://localhost:5000/initdb <br />
 curl http://localhost:5000/widgets
 
 ## Docker Compose
