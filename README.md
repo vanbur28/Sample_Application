@@ -26,3 +26,5 @@ Downloads libraries required to run application.
 Allows the automated flow of docker images to and from dockerhub repository.
 
 ## Jenkinsfile
+
+Only is linked to github (Still working out setting up )
