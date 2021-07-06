@@ -8,8 +8,8 @@ pipeline {
                 }
             }
             steps {
-                sh 'python -m py_compile sources/add2vals.py' 
-                stash(name: 'compiled-results', includes: 'sources/*.py*') 
+                sh 'python -m py_compile /home/ubuntu/app.py' 
+                stash(name: 'compiled-results', includes: '/home/ubuntu/*.py*') 
             }
         }
     }
