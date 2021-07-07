@@ -1,15 +1,9 @@
 pipeline {
-    agent none
+    agent { docker { image 'python:3.5.1' } }
     stages {
-        stage('Build') { 
-            agent {
-                docker {
-                    image 'python:2-alpine' 
-                }
-            }
+        stage('build') {
             steps {
-                sh 'python -m py_compile /home/ubuntu/app.py' 
-                stash(name: 'compiled-results', includes: '/home/ubuntu/*.py*') 
+                sh 'python --version'
             }
         }
     }
