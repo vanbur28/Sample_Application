@@ -1,42 +1,45 @@
 pipeline {
-         agent any
-         stages {
-                 stage('Build') {
-                 steps {
-                     echo 'Hi, GeekFlare. Starting to build the App.'
-                 }
-                 }
-                 stage('Test') {
-                 steps {
-                    input('Do you want to proceed?')
-                 }
-                 }
-                 stage('Deploy') {
-                 parallel { 
-                            stage('Deploy start ') {
-                           steps {
-                                echo "Start the deploy .."
-                           } 
-                           }
-                            stage('Deploying now') {
-                            agent {
-                                    docker {
-                                            reuseNode true
-                                            image ‘nginx’
-                                           }
-                                    }
-                            
-                              steps {
-                                echo "Docker Created"
-                              }
-                           }
-                           }
-                        }
-                 stage('Prod') {
-                     steps {
-                                echo "App is Prod Ready"
-                              }
-                 
-              }
+    options {
+        timestamps()
+        skipDefaultCheckout()
+    }
+    agent {label 'ss-terraform-slave'}
+    parameters {
+        choice(name: 'Action', choices: 'none\napply', description: 'Manual build stages')
+    }
+    triggers {
+        pollSCM('H/5 * * * *')
+    }
+    stages {
+        stage('Checkout script') {
+            steps {
+                cleanWs()
+                checkout scm
+            }
+        }
+        stage('terraform Initiation') {
+            steps {
+                sshagent (credentials: ['4a1fdd2c-75ee-4c98-8af8-6d8fe081b8ac']) {
+                    sh 'git config --global url."git@github.com:".insteadOf "https://github.com/"'
+                    sh 'git submodule update --init --recursive; sleep 10s'
+                    sh 'cd aws/; terraform1228 init'
+                }
+            }
+        }
+        stage('terraform dryrun') {
+            steps {
+                ansiColor('xterm') {
+                    sh 'cd aws/; terraform1228 plan'
+                }
+            }
+        }
+        stage('terraform applying') {
+            when { expression { params.Action == 'apply' } }
+            steps {
+                ansiColor('xterm') {
+                    sh 'cd aws/; terraform1228 apply -auto-approve'
+                }
+            }
+        }
     }
 }
