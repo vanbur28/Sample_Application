@@ -22,13 +22,13 @@ pipeline {
             steps {
                 sshagent (credentials: ['github_access']) {
                     
-                    sh 'git config --global url."git@github.com:vanbur28/sample_application.git:".insteadOf "https://github.com/"'
-                    if (dockerImageExists(ubuntu_web_1)) {
-                        echo 'Application Built'
-                        } else {
-                            sh 'docker-compose -f docker-compose.dev.yml up -d --build'
-                            echo 'Application Built'
-                        }
+                sh 'git config --global url."git@github.com:vanbur28/sample_application.git:".insteadOf "https://github.com/"'
+                if (dockerImageExists(ubuntu_web_1)) {
+                    echo 'Application Built'
+                } else {
+                    sh 'docker-compose -f docker-compose.dev.yml up -d --build'
+                    echo 'Application Built'
+                }
                     
                 }
             }
