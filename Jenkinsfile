@@ -21,14 +21,8 @@ pipeline {
     }
         stage('Application Build') {
             steps {
-                script {
-                    if (dockerImageExists(ubuntu_web_1)) {
-                        echo 'Application Built'
-                    } else {
-                            sh 'docker-compose -f docker-compose.dev.yml up -d --build'
-                            echo 'Application Built'
-                        }
-                    }
+                
+                
                 }
             }
         stage('Application Dryrun') {
