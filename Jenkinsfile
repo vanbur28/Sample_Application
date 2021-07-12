@@ -23,7 +23,7 @@ pipeline {
                 sshagent (credentials: ['github_access']) {
                     
                     sh 'git config --global url."git@github.com:vanbur28/sample_application.git:".insteadOf "https://github.com/"'
-                    if { "$(docker ps -aq -f status=exited -f name=ubuntu_web_1) "
+                    if(sh 'docker ps -aq -f status=exited -f name=ubuntu_web_1') {
                         sh 'docker-compose -f docker-compose.dev.yml up -d --build'
                     }
                     echo 'Application Built'
