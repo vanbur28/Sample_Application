@@ -3,7 +3,7 @@ pipeline {
         timestamps()
         skipDefaultCheckout()
     }
-    agent {label 'ss-terraform-slave'}
+    agent {label 'worker1'}
     parameters {
         choice(name: 'Action', choices: 'none\napply', description: 'Manual build stages')
     }
