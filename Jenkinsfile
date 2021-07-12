@@ -10,19 +10,29 @@ pipeline {
     triggers {
         pollSCM('H/5 * * * *')
     }
-        stage('Build') {
+    stages {
+        stage('Checkout script') {
             steps {
-                sshagent (credentials: ['4a1fdd2c-75ee-4c98-8af8-6d8fe081b8ac']) {
-                    sh 'git config --global url."git@github.com:".insteadOf "https://github.com/"'
+                cleanWs()
+                checkout scm
+                echo 'checkout compleate'
+            }
+        }
+        stage('Application Build') {
+            steps {
+                sshagent (credentials: ['GitHub_app_repo']) {
+                    sh 'git config --global url."git@github.com:vanbur28/sample_application.git:".insteadOf "https://github.com/"'
                     sh 'git submodule update --init --recursive; sleep 10s'
-                    sh 'cd aws/; terraform1228 init'
+                    sh 'cd /home/ubuntu/; app.py init'
+                    echo 'Building'
                 }
             }
         }
-        stage('Dryrun') {
+        stage('Application Dryrun') {
             steps {
                 ansiColor('xterm') {
-                    sh 'cd aws/; terraform1228 plan'
+                    sh 'cd /home/ubuntu/; app.py plan'
+                    echo 'Dryrun compleate'
                 }
             }
         }
@@ -30,7 +40,8 @@ pipeline {
             when { expression { params.Action == 'apply' } }
             steps {
                 ansiColor('xterm') {
-                    sh 'cd aws/; terraform1228 apply -auto-approve'
+                    sh 'cd /home/ubuntu/; terraform1228 apply -auto-approve'
+                    echo 'Deployment compleate'
                 }
             }
         }
