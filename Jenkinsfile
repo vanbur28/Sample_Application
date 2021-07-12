@@ -20,10 +20,9 @@ pipeline {
         }
         stage('Application Build') {
             steps {
-                sshagent (credentials: ['GitHub_app_repo']) {
+                sshagent (credentials: ['github_access']) {
                     sh 'git config --global url."git@github.com:vanbur28/sample_application.git:".insteadOf "https://github.com/"'
-                    sh 'git submodule update --init --recursive; sleep 10s'
-                    sh 'cd /home/ubuntu/; app.py init'
+                    sh 'docker-compose -f docker-compose.dev.yml up -d --build'
                     echo 'Building'
                 }
             }
@@ -31,7 +30,7 @@ pipeline {
         stage('Application Dryrun') {
             steps {
                 ansiColor('xterm') {
-                    sh 'cd /home/ubuntu/; app.py plan'
+                    sh 'docker ps'
                     echo 'Dryrun compleate'
                 }
             }
