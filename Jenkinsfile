@@ -10,14 +10,7 @@ pipeline {
     triggers {
         pollSCM('H/5 * * * *')
     }
-    stages {
-        stage('Checkout script') {
-            steps {
-                cleanWs()
-                checkout scm
-            }
-        }
-        stage('terraform Initiation') {
+        stage('Application Build') {
             steps {
                 sshagent (credentials: ['4a1fdd2c-75ee-4c98-8af8-6d8fe081b8ac']) {
                     sh 'git config --global url."git@github.com:".insteadOf "https://github.com/"'
@@ -26,14 +19,14 @@ pipeline {
                 }
             }
         }
-        stage('terraform dryrun') {
+        stage('Application Dryrun') {
             steps {
                 ansiColor('xterm') {
                     sh 'cd aws/; terraform1228 plan'
                 }
             }
         }
-        stage('terraform applying') {
+        stage('Application Deploying') {
             when { expression { params.Action == 'apply' } }
             steps {
                 ansiColor('xterm') {
