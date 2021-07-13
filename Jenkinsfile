@@ -6,17 +6,22 @@ pipeline {
      parameters {
         string(name: 'BUILD_VERSION', defaultValue: '', description: 'The build version to deploy (optional)')
     }
+
+    //Declares where the file will run, in this case node called worker1
     agent {label 'worker1'}
+
+    //re-runs file every 5 minutes
     triggers {
         pollSCM('H/5 * * * *')
     }
+
 
     stages {
         stage('Checkout script') {
             steps {
                 cleanWs()
                 checkout scm
-                echo 'checkout compleate'
+                echo 'checkout complete'
             }
         }
         stage('Build Version'){
@@ -38,13 +43,15 @@ pipeline {
         stage('Application Build') {
             steps {
                     sh 'docker-compose -f docker-compose.dev.yml up -d --build'
+                    echo 'Build complete'
                 }
             }
 
         stage('Application Deployment') {
-            when { expression { params.Action == 'apply' } }
             steps {
-                    echo 'Deployment compleate'
+                    sh 'docker ps'
+                    if 
+                    echo 'Deployment complete'
                 }
             }
     }
