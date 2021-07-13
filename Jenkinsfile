@@ -18,17 +18,27 @@ pipeline {
                 echo 'checkout compleate'
             }
         }
+        stage('Build Version'){
+            when { expression { return !params.BUILD_VERSION } }
+            steps{
+                script {
+                    BUILD_VERSION_GENERATED = VersionNumber(
+                        versionNumberString: 'v${BUILD_YEAR, XX}.${BUILD_MONTH, XX}${BUILD_DAY, XX}.${BUILDS_TODAY}',
+                        projectStartDate:    '2021-06-01',
+                        skipFailedBuilds:    true)
+                    currentBuild.displayName = BUILD_VERSION_GENERATED
+                    env.VERSION = BUILD_VERSION_GENERATED
+                    env.BUILD = 'true'
+                }
+            }
+        }
         stage('Application Build') {
             steps {
                     sh 'docker-compose -f docker-compose.dev.yml up -d --build'
                 }
             }
-        stage('Application Dryrun') {
-            steps {
-                    echo 'Dryrun compleate'
-                }
-        }
-        stage('Application Deploying') {
+
+        stage('Application Deployment') {
             when { expression { params.Action == 'apply' } }
             steps {
                     echo 'Deployment compleate'
