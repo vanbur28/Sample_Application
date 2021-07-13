@@ -21,7 +21,7 @@ pipeline {
     }
         stage('Application Build') {
             steps {
-                
+                sh 'docker-compose -f docker-compose.dev.yml up -d --build'
                 
                 }
             }
