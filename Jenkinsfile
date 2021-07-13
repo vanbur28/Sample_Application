@@ -22,24 +22,17 @@ pipeline {
         stage('Application Build') {
             steps {
                 sh 'docker-compose -f docker-compose.dev.yml up -d --build'
-                
                 }
             }
         stage('Application Dryrun') {
             steps {
-                ansiColor('xterm') {
-                    sh 'docker ps'
                     echo 'Dryrun compleate'
                 }
-            }
         }
         stage('Application Deploying') {
             when { expression { params.Action == 'apply' } }
             steps {
-                ansiColor('xterm') {
-                    sh 'cd /home/ubuntu/; terraform1228 apply -auto-approve'
                     echo 'Deployment compleate'
                 }
             }
-        }
 }
