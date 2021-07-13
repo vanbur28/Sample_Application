@@ -8,7 +8,7 @@ pipeline {
     }
 
     //Declares where the file will run, in this case node called worker1
-    agent {label 'worker1'}
+    agent {worker1}
 
     //re-runs file every 5 minutes
     triggers {
@@ -47,7 +47,7 @@ pipeline {
                 }
             }
 
-        stage('Application Deployment') {
+        stage('Deploy to node') {
             steps {
                     echo 'Deployment complete'
                 }
