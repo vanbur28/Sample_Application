@@ -7,9 +7,6 @@ pipeline {
         string(name: 'BUILD_VERSION', defaultValue: '', description: 'The build version to deploy (optional)')
     }
     agent {label 'worker1'}
-    parameters {
-        choice(name: 'Action', choices: 'none\napply', description: 'Manual build stages')
-    }
     triggers {
         pollSCM('H/5 * * * *')
     }
