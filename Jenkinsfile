@@ -10,6 +10,7 @@ pipeline {
     triggers {
         pollSCM('H/5 * * * *')
     }
+
     stages {
         stage('Checkout script') {
             steps {
@@ -22,13 +23,15 @@ pipeline {
             when { expression { return !params.BUILD_VERSION } }
             steps{
                 script {
+                    def packageJSON = readJSON(file: 'package.json')
+                    def artifactVersion = packageJSON.version
+                    env.ARTIFACT_VERSION = artifactVersion
                     BUILD_VERSION_GENERATED = VersionNumber(
                         versionNumberString: 'v${BUILD_YEAR, XX}.${BUILD_MONTH, XX}${BUILD_DAY, XX}.${BUILDS_TODAY}',
-                        projectStartDate:    '2021-06-01',
+                        projectStartDate:    '1970-01-01',
                         skipFailedBuilds:    true)
                     currentBuild.displayName = BUILD_VERSION_GENERATED
-                    env.VERSION = BUILD_VERSION_GENERATED
-                    env.BUILD = 'true'
+                    env.BUILD_VERSION = BUILD_VERSION_GENERATED
                 }
             }
         }
