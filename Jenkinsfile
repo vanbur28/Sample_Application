@@ -49,8 +49,6 @@ pipeline {
 
         stage('Application Deployment') {
             steps {
-                    sh 'docker ps'
-                    if 
                     echo 'Deployment complete'
                 }
             }
