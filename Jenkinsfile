@@ -8,7 +8,7 @@ pipeline {
     }
 
     //Declares where the file will run, in this case node called worker1
-    agent {label 'worker1'}
+    agent {label '!master'}
 
     //re-runs file every 5 minutes
     triggers {
