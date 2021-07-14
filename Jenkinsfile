@@ -36,24 +36,18 @@ pipeline {
                         skipFailedBuilds:    true)
                     currentBuild.displayName = BUILD_VERSION_GENERATED
                     env.BUILD_VERSION = BUILD_VERSION_GENERATED
-                    env.BUILD = 'true'
                 }
             }
         }
         stage('Application Build') {
             steps {
-
-                            sh 'docker-compose -f docker-compose.dev.yml up -d --build'
-                            echo 'Build complete'
-                    
-                    
-            
+                sh 'docker-compose -f docker-compose.dev.yml up -d --build'
+                echo 'Build complete'
             }
 
         stage('Deploy to node') {
-            when { expression { return env.BUILD == 'true' }}
             steps {
-                    echo 'Deployment complete'
+                echo 'Deployment complete'
                 }
             }
     }
