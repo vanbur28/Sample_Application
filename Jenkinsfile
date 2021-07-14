@@ -8,12 +8,13 @@ pipeline {
     }
 
     //Declares where the file will run, in this case node called worker1
-    agent {label '!master'}
+    agent {label 'worker1'}
 
     //re-runs file every 5 minutes
     triggers {
         pollSCM('H/5 * * * *')
     }
+
 
     stages {
         stage('Checkout script') {
@@ -41,15 +42,15 @@ pipeline {
         }
         stage('Application Build') {
             steps {
-                sh 'docker-compose -f docker-compose.dev.yml up -d --build'
-                echo 'Build complete'
+                    sh 'docker-compose -f docker-compose.dev.yml up -d --build'
+                    echo 'Build complete'
+                }
             }
 
         stage('Deploy to node') {
             steps {
-                echo 'Deployment complete'
+                    echo 'Deployment complete'
                 }
             }
     }
-}
 }
