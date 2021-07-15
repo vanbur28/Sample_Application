@@ -14,9 +14,10 @@ pipeline {
     triggers {
         pollSCM('H/5 * * * *')
     }
-    stages {
 
+    stages {
         stage('Build Version'){
+            when { expression { return !params.BUILD_VERSION } }
             steps{
                 script {
                     def packageJSON = readJSON(file: 'package.json')
