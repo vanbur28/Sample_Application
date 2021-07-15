@@ -17,13 +17,7 @@ pipeline {
 
 
     stages {
-        stage('Checkout script') {
-            steps {
-                cleanWs()
-                checkout scm
-                echo 'checkout complete'
-            }
-        }
+
         stage('Build Version'){
             when { expression { return !params.BUILD_VERSION } }
             steps{
@@ -38,6 +32,13 @@ pipeline {
                     currentBuild.displayName = BUILD_VERSION_GENERATED
                     env.BUILD_VERSION = BUILD_VERSION_GENERATED
                 }
+            }
+        }
+        stage('Checkout script') {
+            steps {
+                cleanWs()
+                checkout scm
+                echo 'checkout complete'
             }
         }
         stage('Application Build') {
