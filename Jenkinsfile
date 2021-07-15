@@ -20,15 +20,13 @@ pipeline {
             when { expression { return !params.BUILD_VERSION } }
             steps{
                 script {
-                    def packageJSON = readJSON(file: 'package.json')
-                    def artifactVersion = packageJSON.version
-                    env.ARTIFACT_VERSION = artifactVersion
                     BUILD_VERSION_GENERATED = VersionNumber(
                         versionNumberString: 'v${BUILD_YEAR, XX}.${BUILD_MONTH, XX}${BUILD_DAY, XX}.${BUILDS_TODAY}',
                         projectStartDate:    '1970-01-01',
                         skipFailedBuilds:    true)
                     currentBuild.displayName = BUILD_VERSION_GENERATED
                     env.BUILD_VERSION = BUILD_VERSION_GENERATED
+                    env.BUILD = 'true'
                 }
             }
         }
