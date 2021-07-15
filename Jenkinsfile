@@ -3,21 +3,23 @@ pipeline {
         timestamps()
         skipDefaultCheckout()
     }
-     parameters {
-        string(name: 'BUILD_VERSION', defaultValue: '', description: 'The build version to deploy (optional)')
-    }
 
     //Declares where the file will run, in this case node called worker1
-    agent {label 'worker1'}
+    agent {
+        node { label 'build && ncats'}
 
     //re-runs file every 5 minutes
     triggers {
         pollSCM('H/5 * * * *')
     }
 
+     parameters {
+        string(name: 'BUILD_VERSION', defaultValue: '', description: '')
+    }
+
     stages {
         stage('Build Version'){
-            when { expression { return !params.BUILD_VERSION } }
+            when { expression { BUILD_VERSION == '' } }
             steps{
                 script {
                     BUILD_VERSION_GENERATED = VersionNumber(
