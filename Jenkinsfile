@@ -41,8 +41,15 @@ pipeline {
         }
         stage('Application Build') {
             steps {
-                    sh 'docker-compose -f docker-compose.dev.yml up -d --build'
-                    echo 'Build complete'
+                withEnv([
+                    "IMAGE_NAME=sample_application",
+                ]) {
+                    cleanWs()
+                    checkout scm
+                    script {
+                        // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
+                        docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
+                    }
                 }
             }
 
@@ -52,4 +59,5 @@ pipeline {
                 }
             }
     }
+}
 }
