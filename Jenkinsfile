@@ -59,10 +59,9 @@ pipeline {
         stage('Deploy to node') {
             steps {
                 script {
-                    docker.withRegistry('https://063208468694.dkr.ecr.us-west-1a.amazonaws.com', 'ecr:us-west-1a:github_access') {
-                        sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/pahmadi_app:$BUILD_NUMBER')
-                        sh 'docker stop pouyancontainer'
-                        sh 'docker rm pouyancontainer' 
+                    docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:github_access') {
+                        sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/sample_application:$BUILD_NUMBER')
+                        sh 'docker stop my-first-pipeline_main_web_1'
                         sh 'docker-compose -f docker-compose.dev.yml up -d --build'
                         }
                     }
