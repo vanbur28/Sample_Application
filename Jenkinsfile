@@ -53,7 +53,7 @@ pipeline {
                             docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
                             docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:github_access') {
                                 sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/sample_application:$BUILD_NUMBER'
-                    }
+                            }
                 }
             }
         }
@@ -71,4 +71,4 @@ pipeline {
     }
 
 }
-
+}
