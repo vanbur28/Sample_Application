@@ -41,23 +41,35 @@ pipeline {
         }
         stage('Application Build') {
             steps {
-                withEnv([
-                    "IMAGE_NAME=sample_application",
-                ]) {
-                    cleanWs()
-                    checkout scm
-                    script {
-                        // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
-                        docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
+                sshagent (credentials: ['github_access']) {
+                    withEnv([
+                        "IMAGE_NAME=sample_application",
+                        "BUILD_VERSION=" + (params.BUILD_VERSION ?: env.VERSION)
+                    ]) {
+                        cleanWs()
+                        checkout scm
+                        script {
+                            // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
+                            docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
                     }
                 }
             }
+        }
 
         stage('Deploy to node') {
             steps {
-                    echo 'Deployment complete'
+                script {
+                    docker.withRegistry('https://063208468694.dkr.ecr.us-west-1a.amazonaws.com', 'ecr:us-west-1a:github_access') {
+                        sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/pahmadi_app:$BUILD_NUMBER')
+                        sh 'docker stop pouyancontainer'
+                        sh 'docker rm pouyancontainer' 
+                        sh 'docker-compose -f docker-compose.dev.yml up -d --build'
+                        }
+                    }
                 }
-            }
+                echo 'Deployment complete'
+        }
     }
+
 }
-}
+
