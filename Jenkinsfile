@@ -42,7 +42,7 @@ pipeline {
         stage('Application Build') {
             steps {
                     withEnv([
-                        "IMAGE_NAME=sample_application",
+                        "IMAGE_NAME=vanburen_app",
                         "BUILD_VERSION=" + (params.BUILD_VERSION ?: env.VERSION)
                     ]) {
                         cleanWs()
