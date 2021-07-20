@@ -52,7 +52,7 @@ pipeline {
                             docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
                             sh 'docker ps -q'
                             docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
-                                sh 'docker run -d -p 127.0.0.1:5000:5000 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
+                            sh 'docker run -d -p 127.0.0.1:5000:5000 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                             }
 
                     }
@@ -61,10 +61,10 @@ pipeline {
         }
         stage('Deploy to node') {
             steps {
-                script {
+                //script {
                         //sh 'docker ps -q'
                         //sh 'docker run -d -p 127.0.0.1:5000:5000 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
-                        }
+                        //}
                     }
                 }
         }
