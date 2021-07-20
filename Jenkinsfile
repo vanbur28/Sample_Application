@@ -61,7 +61,7 @@ pipeline {
         stage('Deploy to node') {
             steps {
                 script {
-                        sh 'docker kill $(docker ps -q)'
+                        sh 'docker ps -q'
                         sh 'docker run -d -p --name vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                         }
                     }
