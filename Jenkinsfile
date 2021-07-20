@@ -62,7 +62,7 @@ pipeline {
             steps {
                 script {
                         sh 'docker ps -q'
-                        sh 'docker run -d -p 5000:5000 ${env.IMAGE_NAME}'
+                        sh 'docker run -d -p 5000:5000 "${env.IMAGE_NAME}" 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                         }
                     }
                 }
