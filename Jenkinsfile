@@ -27,7 +27,7 @@ pipeline {
                         projectStartDate:    '1970-01-01',
                         skipFailedBuilds:    true)
                     currentBuild.displayName = BUILD_VERSION_GENERATED
-                    env.VERSION = BUILD_VERSION_GENERATED
+                    env.BUILD_VERSION = BUILD_VERSION_GENERATED
                     env.BUILD = 'true'
                 }
             }
