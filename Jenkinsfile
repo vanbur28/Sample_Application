@@ -61,8 +61,8 @@ pipeline {
         stage('Deploy to node') {
             steps {
                 script {
-                        sh 'docker stop my-first-pipeline_main_web_1'
-                        sh 'docker-compose -f docker-compose.dev.yml up -d --build'
+                        sh 'docker stop vanburen_app'
+                        sh 'docker run -d -p --name vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/"${env.IMAGE_NAME}":$BUILD_NUMBER'
                         }
                     }
                 }
