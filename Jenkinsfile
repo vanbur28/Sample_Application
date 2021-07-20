@@ -61,8 +61,8 @@ pipeline {
         stage('Deploy to node') {
             steps {
                 script {
-                        sh 'docker system prune'
-                        sh 'echo y'
+                        sh 'docker stop vanburen_app'
+                        sh 'docker rm vanpuren_app'
                         sh 'docker run -d -p 5000:5000 --name vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_VERSION'
                         }
                     }
