@@ -49,7 +49,7 @@ pipeline {
                         checkout scm
                         script {
                             // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
-                            docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
+                            docker.build("063208468694.dkr.ecr.us-west-1.amazonaws.com" +"/vanburen_app"+":$BUILD_VERSION")
                             docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
                 
                             }
@@ -63,6 +63,7 @@ pipeline {
                 script {
                         sh 'docker ps -q'
                         sh 'docker run -d -p 5000:5000 vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
+                        sh 'docker run -d -p 5000:5000 vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_VERSION'
                         }
                     }
                 }
