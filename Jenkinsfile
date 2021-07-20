@@ -27,7 +27,7 @@ pipeline {
                         projectStartDate:    '1970-01-01',
                         skipFailedBuilds:    true)
                     currentBuild.displayName = BUILD_VERSION_GENERATED
-                    env.BUILD_VERSION = BUILD_VERSION_GENERATED
+                    env.VERSION = BUILD_VERSION_GENERATED
                     env.BUILD = 'true'
                 }
             }
@@ -48,11 +48,13 @@ pipeline {
                         cleanWs()
                         checkout scm
                         script {
-                            // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
-                            //docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
-                            docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
                             
-                        }
+                            // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
+                            docker.build("${env.IMAGE_NAME}", "--build-arg --no-cache ./")
+                            docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
+                                docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
+                            }
+
                     }
                 }
             }
