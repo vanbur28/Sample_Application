@@ -65,7 +65,7 @@ pipeline {
               
                 script {
                     docker.withRegistry("https://063208468694.dkr.ecr.us-west-1.amazonaws.com/", "ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba") {
-                        sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:latest'
+                        sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app'
                         }
                         sh 'docker stop vanburen_app'
                         sh 'docker rm vanburen_app'
