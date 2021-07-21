@@ -50,19 +50,9 @@ pipeline {
                         script {
 
                             // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
-
-                            //sh 'docker build . -t 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
-
                             docker.build("063208468694.dkr.ecr.us-west-1.amazonaws.com"+"/vanburen_app"+':$BUILD_NUMBER')
-                            //docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
-                                //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
-                            //}
-                            // sh 'docker build -t vanburen_app .'
-                            // sh 'docker tag vanburen_app:latest vanburen_app:${BUILD_VERSION}'
+
                             docker.withRegistry("https://063208468694.dkr.ecr.us-west-1.amazonaws.com", "ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba") {
-
-                                //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
-
                                 sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                         }
                     }
@@ -78,8 +68,6 @@ pipeline {
               
                 script {
                     sh 'docker stop vanburen_container || true && docker rm vanburen_container || true'
-                    //sh 'docker stop vanburen_app'
-                    //sh 'docker rm vanburen_app'
                     sh 'docker run -d -p 3600:80 --name vanburen_container 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                 }
             }

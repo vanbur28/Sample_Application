@@ -1,10 +1,11 @@
-# syntax=docker/dockerfile:1 #Instructs the dockerfile for what syntax to use.
+#syntax=docker/dockerfile:1 
+#Instructs the dockerfile for what syntax to use.
 
 # This part of the code twlls what specific base image to use, the slim buster has the minimum packages installed
 FROM python:3.9.5-slim-buster 
 
 #where the files are being used from on the directory the dockerfile is running (local in this case)
-WORKDIR /home/ubuntu/sample_application/
+WORKDIR /home/ubuntu/
 
 #To copy the contents of the requirments.txt to another .txt file with the same name within the image
 COPY requirements.txt requirements.txt
