@@ -49,21 +49,27 @@ pipeline {
                         checkout scm
                         script {
                             // See: https://jenkins.io/doc/book/pipeline/docker/#building-containers
-                            docker.build("063208468694.dkr.ecr.us-west-1.amazonaws.com" +"/vanburen_app"+":$BUILD_VERSION")
-                            docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
-                
-                            }
+                            //docker.build("${env.IMAGE_NAME}", "--no-cache --build-arg SOURCE_FOLDER=./${env.BUILD_VERSION} .")
+                            //docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
+                                //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
+                            //}
+                            sh 'docker build -t vanburen_app .'
 
                     }
                 }
             }
         }
         stage('Deploy to node') {
+            agent {
+                label 'worker1'
+            }
             steps {
+                withDockerRegistry([url: "https://063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app",credentialsId: "ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba"]) {
                 script {
+                        sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_VERSION'
                         sh 'docker stop vanburen_app'
                         sh 'docker rm vanburen_app'
-                        sh 'docker run -d -p 5000:5000 --name vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_VERSION'
+                        sh 'docker run -d -p 127.0.0.1:5000:80 vanburen_container 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_VERSION'
                         }
                     }
                 }
