@@ -80,7 +80,7 @@ pipeline {
                     sh 'docker stop vanburen_container || true && docker rm vanburen_container || true'
                     //sh 'docker stop vanburen_app'
                     //sh 'docker rm vanburen_app'
-                    sh 'docker run -d -p 127.0.0.1:3600:80 --name vanburen_container 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
+                    sh 'docker run -d -p 3600:80 --name vanburen_container 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                 }
             }
         }
