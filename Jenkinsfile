@@ -71,6 +71,7 @@ pipeline {
                         //sh 'docker push vanburen_app'
                     }
 
+                    sh 'docker run -d -p 127.0.0.1:5000:80 vanburen_app'
                 }
             }
         }
