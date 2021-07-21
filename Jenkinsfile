@@ -63,7 +63,7 @@ pipeline {
             }
             steps {
                 docker.withRegistry("https://063208468694.dkr.ecr.us-west-1.amazonaws.com/", "ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba") {
-                    bat 'docker push ubuntu/vanburen_app:latest'
+                    sh 'docker push ubuntu/vanburen_app:latest'
                 }
             }
                 script {
