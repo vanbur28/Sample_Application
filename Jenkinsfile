@@ -62,9 +62,9 @@ pipeline {
                                 //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
 
                                 sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
+                        }
                     }
 
-        
                 }
             }
         }
@@ -83,6 +83,5 @@ pipeline {
             }
         }
     }
-}
 }
 
