@@ -51,7 +51,7 @@ pipeline {
                             //docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
                                 //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
                             //}
-                            sh 'docker build -t vanburen_app .'
+                            sh 'docker build -t vanburen_app:latest .'
 
                     }
                 }
