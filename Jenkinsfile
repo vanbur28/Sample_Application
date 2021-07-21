@@ -72,7 +72,7 @@ pipeline {
                     //sh 'docker stop vanburen_app'
                     //sh 'docker rm vanburen_app'
                     
-                    sh 'docker run -d -p 127.0.0.1:5000:80 vanburen_app'
+                    sh 'docker run -d -p 127.0.0.1:5000:80 vanburen_app 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app'
                 }
             }
         }
