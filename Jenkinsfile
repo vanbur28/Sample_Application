@@ -51,7 +51,7 @@ pipeline {
 
                             //sh 'docker build . -t 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
 
-                            docker.build("063208468694.dkr.ecr.us-west-1.amazonaws.com"+"/vanburen_app"+':$BUILD_NUMBER'
+                            docker.build("063208468694.dkr.ecr.us-west-1.amazonaws.com"+"/vanburen_app"+':$BUILD_NUMBER')
                             //docker.withRegistry('https://063208468694.dkr.ecr.us-west-1.amazonaws.com', 'ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba'){
                                 //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
                             //}
@@ -64,7 +64,7 @@ pipeline {
                                 sh 'docker push 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_NUMBER'
                     }
 
-                    }
+        
                 }
             }
         }
@@ -84,5 +84,5 @@ pipeline {
         }
     }
 }
-
+}
 
