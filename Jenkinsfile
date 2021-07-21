@@ -62,9 +62,10 @@ pipeline {
                 label 'worker1'
             }
             steps {
-                withDockerRegistry([url: "https://063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app",credentialsId: "ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba"]) {
+                docker.withRegistry("https://063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app",credentialsId: "ecr:us-west-1:0cdb4404-ed40-459b-8589-7f1f235747ba") {
+                    bat 'docker push vanburen_app:latest'
+                }
                 script {
-                        sh 'docker push vanburen_app:latest'
                         sh 'docker stop vanburen_app'
                         sh 'docker rm vanburen_app'
                         sh 'docker run -d -p 127.0.0.1:5000:80 vanburen_container 063208468694.dkr.ecr.us-west-1.amazonaws.com/vanburen_app:$BUILD_VERSION'
