@@ -52,7 +52,7 @@ pipeline {
                                 //docker.image("${env.IMAGE_NAME}").push("${BUILD_VERSION}")
                             //}
                             sh 'docker build -t vanburen_app .'
-                            sh 'docker tag vanburen_app;latest'
+                            sh 'docker tag vanburen_app;latest python-docker:${BUILD_VERSION}'
 
                     }
                 }
