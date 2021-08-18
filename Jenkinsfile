@@ -62,7 +62,7 @@ pipeline {
         }
         stage('Deploy to node') {
             agent {
-                label 'worker1'
+                label 'application_node_1'
             }
             steps {
               
